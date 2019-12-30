@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Ajax upload form</title>
+</head>
+<body>
+<h2>Serving video files from Flask template</h2>
+  <video width="720" height="480" controls>
+    <source src={{ url_for('static', filename="demo.mp4") }} type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <br>
+ <form>
+ 	 <button type="button">Play!</button>               
+            
+  </form>
+<!--
+  By default, we assume Ajax uploads are not supported.
+  Later we'll detect support and change this message if found.
+-->
+<p id="support-notice">Your browser does not support Ajax uploads :-(<br/>The form will be submitted as normal.</p>
+
+<!-- The form starts -->
+<form action="/" method="post" enctype="multipart/form-data" id="form-id">
+
+  <!-- The file to upload -->
+  <p><input id="file-id" type="file" name="our-file" />
+
+  <!--
+    Also by default, we disable the upload button.
+    If Ajax uploads are supported we'll enable it.
+  -->
+  <input type="button" value="Upload" id="upload-button-id" disabled="disabled" /></p>
+
+  <!-- A different field, just for the sake of the example -->
+  <p><label>Some other field: <input name="other-field" type="text" id="other-field-id" /></label></p>
+
+  <!-- And finally a submit button -->
+  <p><input type="submit" value="Submit" /></p>
+<script>
+
+// Get camera video
+const constraints = {
+    audio: false,
+    video: {
+        width: {min: 640, ideal: 1280, max: 1920},
+        height: {min: 480, ideal: 720, max: 1080}
+    }
+};
+
+navigator.mediaDevices.getUserMedia(constraints)
+    .then(stream => {
+        document.getElementById("myVideo").srcObject = stream;
+        console.log("Got local user video");
+
+    })
+    .catch(err => {
+        console.log('navigator.getUserMedia error: ', err)
+    });
+
+// Start object detection
+function startObjectDetection() {
+
+    console.log("starting object detection");
+
+    // Set canvas sizes base don input video
+    drawCanvas.width = v.videoWidth;
+    drawCanvas.height = v.videoHeight;
+
+    imageCanvas.width = uploadWidth;
+    imageCanvas.height = uploadWidth * (v.videoHeight / v.videoWidth);
+
+    // Some styles for the drawcanvas
+    drawCtx.lineWidth = 4;
+    drawCtx.strokeStyle = "cyan";
+    drawCtx.font = "20px Verdana";
+    drawCtx.fillStyle = "cyan";
+
+    //Save and send the first image
+    imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight, 0, 0, uploadWidth, uploadWidth * (v.videoHeight / v.videoWidth));
+    imageCanvas.toBlob(postFile, 'image/jpeg');
+
+}
+
+// Add file blob to a form and post
+function postFile(file) {
+
+    //Set options as form data
+    let formdata = new FormData();
+    formdata.append("image", file);
+    formdata.append("threshold", scoreThreshold);
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', apiServer, true);
+    xhr.onload = function () {
+        if (this.status === 200) {
+            let objects = JSON.parse(this.response);
+
+            //draw the boxes
+            drawBoxes(objects);
+
+            //Save and send the next image
+            imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight, 0, 0, uploadWidth, uploadWidth * (v.videoHeight / v.videoWidth));
+            imageCanvas.toBlob(postFile, 'image/jpeg');
+        }
+        else {
+            console.error(xhr);
+        }
+    };
+    xhr.send(formdata);
+}
+
+</script>
+
+  <!-- Placeholders for messages set by event handlers -->
+  <p id="upload-status"></p>
+  <p id="progress"></p>
+  <pre id="result"></pre>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://webrtcexperiment-webrtc.netdna-ssl.com/RecordRTC.js"></script>
+    <section class="experiment">
+        <div class="inner">
+            <button style="float: right;" id="fit-to-screen">Fit to Screen!</button>
+            <label for="canvas-width-input">Canvas Width</label>
+            <input type="text" id="canvas-width-input" value="320">
+            <br />
+            <label for="canvas-height-input">Canvas Height</label>
+            <input type="text" id="canvas-height-input" value="240">
+            <br />
+            <div>
+                <button id="record-video">Record</button>
+                <button id="pause-resume-video" disabled>Pause</button>
+                <button id="stop-recording-video" disabled>Stop</button>
+                <hr>
+                <h2 id="video-url-preview"></h2>
+                <br>
+                <input type="checkbox" id="record-screen" style="width:auto;">
+                <label for="record-screen">Record Screen</label>
+                <br>
+
+
+                <video id="video" type="video/mp4" autoplay loop controls muted></video>
+
+            </div>
+        </div>
+
+    </section>
+    <form action="/video_upload" method="post"   enctype="multipart/form-data">
+                    <input type="hidden" id="two" name="two">
+        <input type="submit">
+    </form>
+
+    <script>
+        (function() {
+            var params = {},
+                r = /([^&=]+)=?([^&]*)/g;
+
+            function d(s) {
+                return decodeURIComponent(s.replace(/\+/g, ' '));
+            }
+
+            var match, search = window.location.search;
+            while (match = r.exec(search.substring(1)))
+                params[d(match[1])] = d(match[2]);
+
+            window.params = params;
+        })();
+    </script>
+
+    <script>
+    function getByID(id) {
+        return document.getElementById(id);
+    }
+
+    var recordVideo = getByID('record-video'),
+        pauseResumeVideo = getByID('pause-resume-video'),
+        stopRecordingVideo = getByID('stop-recording-video');
+
+    var canvasWidth_input = getByID('canvas-width-input'),
+        canvasHeight_input = getByID('canvas-height-input');
+
+    if(params.canvas_width) {
+        canvasWidth_input.value = params.canvas_width;
+    }
+
+    if(params.canvas_height) {
+        canvasHeight_input.value = params.canvas_height;
+    }
+
+    var video = getByID('video');
+
+    var videoConstraints = {
+        audio: false,
+        video: {
+            mandatory: {},
+            optional: []
+        }
+    };
+
+    </script>
+
+    <script>
+    var screen_constraints;
+    function isCaptureScreen(callback) {
+        if (document.getElementById('record-screen').checked) {
+            document.getElementById('fit-to-screen').onclick();
+
+            getScreenId(function (error, sourceId, _screen_constraints) {
+                if(error === 'not-installed') {
+                    window.open('');
+                }
+
+                if(error === 'permission-denied') {
+                    alert('Screen capturing permission is denied.');
+                }
+
+                if(error === 'installed-disabled') {
+                    alert('Please enable chrome screen capturing extension.');
+                }
+
+                if(_screen_constraints) {
+                    screen_constraints = _screen_constraints.video;
+                    videoConstraints = _screen_constraints;
+                }
+                else {
+                    videoConstraints = screen_constraints;
+                }
+
+                callback();
+            });
+        }
+        else {
+            callback();
+        }
+    }
+
+    recordVideo.onclick = function() {
+        isCaptureScreen(function() {
+            recordVideoOrGIF(true);
+        });
+    };
+
+
+    function recordVideoOrGIF(isRecordVideo) {
+        navigator.getUserMedia(videoConstraints, function(stream) {
+            video.onloadedmetadata = function() {
+                video.width = canvasWidth_input.value || 320;
+                video.height = canvasHeight_input.value || 240;
+
+                var options = {
+                    type: isRecordVideo ? 'video' : 'gif',
+                    video: video,
+                    canvas: {
+                        width: canvasWidth_input.value,
+                        height: canvasHeight_input.value
+                    },
+                    disableLogs: params.disableLogs || false,
+                    recorderType: null // to let RecordRTC choose relevant types itself
+                };
+
+                recorder = window.RecordRTC(stream, options);
+                recorder.startRecording();
+
+                video.onloadedmetadata = false;
+            };
+            video.src = URL.createObjectURL(stream);
+        }, function() {
+            if (document.getElementById('record-screen').checked) {
+                if (location.protocol === 'https:')
+                    alert('<https> is mandatory to capture screen.');
+                else
+                    alert('Multi-capturing of screen is not allowed. Capturing process is denied. Are you enabled flag: "Enable screen capture support in getUserMedia"?');
+            } else
+                alert('Webcam access is denied.');
+        });
+
+        window.isAudio = false;
+
+        if (isRecordVideo) {
+            recordVideo.disabled = true;
+            stopRecordingVideo.disabled = false;
+            pauseResumeVideo.disabled = false;
+        }
+    }
+
+
+    stopRecordingVideo.onclick = function() {
+        this.disabled = true;
+        recordVideo.disabled = false;
+
+        if (recorder)
+    recorder.stopRecording(function(url) {
+            video.src = url;
+            video.play();
+            document.getElementById("two").value = video.src;
+            document.getElementById('video-url-preview').innerHTML = '<a href="' + url + '" target="_blank" download="sp.mp4">Save</a>';
+        });}
+
+    </script>
+<script>
+
+</script>
+
+    <script>
+    document.getElementById('fit-to-screen').onclick = function() {
+        this.disabled = true;
+
+        video.width = canvasWidth_input.value = innerWidth;
+        video.height = canvasHeight_input.value = innerHeight;
+    };
+    </script>
