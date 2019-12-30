@@ -1,1 +1,2 @@
 # Emotion_Detection
+This project is built as a final project for AI Deep dive. It consists of the ability for the user to record a user while they are watching a video, movie review, advertisement. The webcam starts simultanoeusly when the video on the browser loads - all happening at inside the browser. The data collected from the webcam is passed to a Python file that detects Emotion Detection. The project uses Fer2013 data.  
