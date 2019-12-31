@@ -10,8 +10,6 @@ import numpy as np
 import pandas as pd
 import time
 
-from video_cap import *
-
 import re
 import os
 from collections import Counter
