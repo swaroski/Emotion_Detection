@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/CSS/style.css">
+    <title>Video Review</title>
+
+  </head>
+  <body>
+    <a href="/">
+      <img src = "/static/CSS/images/head.png" width="100%">
+    </a>
+    <br>
+
+ {% block body %}
+
+  <!--
+  Video Review
+  -->
+  <div class="row">
+      <div class="column_home" id="left-col" align="center">
+        <img src = "/static/CSS/images/video.png" width="100%">
+        <div style="width:70%; text-align:justify; align-content:center; display:inline-block;">
+          <p> Watch the video to allow us with a feedback on how our algorithm interprets your facial features.</p>
+          <br>
+          <p> We will extract facial features such as :
+          <ul>
+            <li>Emotions - Surprise, Happiness, Boredom</li>
+            <li>Gender</li>
+            <li>Age</li>
+            <li>Eye Fixation</li>
+          </ul>
+          <br>
+          <br>
+        </div>
+      </div>
+
+     
+     </div>
+
+  </div>
+
+
+  <div class="row">
+    <!--
+    Video Review button
+    -->
+     <div class="column_home" id="left-col" align="center">
+         <form action="/review" method="post" align="center">
+         <input type="submit" name="video" value="I Consent" align="center">
+       </form>
+     </div>
+
+     
+</div>
+
+<br>
+<br>
+<br>
+
+      {# End of block "body" #}
+    {% endblock %}
+
+    <br>
+    <br>
+    <a href="/static/rules.html">How does it work ?</a>
+    <br>
+    <br>
+
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+       
+<html>
+<head>
+  <title>Video Example</title>
+</head>
+<body background-color: pink>
+  <h2>Serving video files from Flask template</h2>
+  
+  <video width="720" height="480" controls autoplay muted id="videoId" >
+   <source src={{ url_for('static', filename="demo.mp4") }} type="video/mp4" preload autoplay>
+    Your browser does not support the video tag.
+  </video>
+  <script>
+  window.addEventListener('load', async () => {
+  let video = document.querySelector('video[muted][autoplay]');
+  try {
+    await video.play();
+  } catch (err) {
+    video.controls = true;
+  }
+});
+   </script>
+  <br>
+ 
+<div id="myVideo">
+This is my DIV element.
+</div>
+
+<script src="/static/js/webcam.js"></script>
+<script src="/static/js/RecordRTC.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script>
+function myFunction() {
+  document.getElementById("myVideo").style.display = "none";
+}
+</script>
+
+<script>
+function myFunction() {
+  document.getElementById("myVideo").style.visibility = "hidden";
+}
+</script>
+</video>
+
+
+
+
+</body>
+</html>
