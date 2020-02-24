@@ -3,7 +3,8 @@ This project is built as a final project for AI Deep dive. It consists of the ab
 
 The idea of this project is to have a browser extension, Mobile App and a Web App that connects to Adtech platforms. Once connected, a user would be shown ads based on their cookies and they would be incentivized to watch those ads, instead of pressing "Skip Ad" as it often happens with video advertisements. While we ask for their consent to track the mentioned facial features. This data would allow advertising companies \ Publishers to understand what part of the ad the user is focussed on and also their engagement level. 
 
-Use app1.py to run instead of main.py
+Use app1.py to run instead of main.py.
+
 app1.py fires the Flask server. After a new user logs into the App, they would be asked to give consent by pressing "I consent" button. They would then be directed to a page that serves a video advertisement. Once the video advertisement starts, a webcam would open, again asking for access on their browser. Once the vid stops, recording of the webcam would also stop. The recorded blob would be stored as a video file on "uploads_files" folder or S3 bucket. 
 
 At the backend, 
