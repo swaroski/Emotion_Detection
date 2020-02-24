@@ -1,7 +1,7 @@
-# Emotion_Detection
-This project is built as a final project for AI Deep dive. It consists of the ability for the user to record users' facial features while they are watching a video, movie review, advertisement. The webcam starts simultaneously when the video on the browser loads - all happening inside the browser using WebRTC. The data collected from the webcam is passed to a Python file that detects emotions, tracks eye gaze and also predicts age and gender of the person watching the video. The project uses Fer2013 data. 
+# Multi-Modal Facial Detection
+This project is built as a final project for AI Deep dive. It consists of the ability for the client serving the video to record users' facial features while they are watching a video, movie trailer, advertisement, product launch. The webcam starts simultaneously when the video on the browser loads - all happening inside the browser using WebRTC. The data collected from the webcam is passed to a Python file that detects emotions, tracks eye gaze and also predicts age and gender of the person watching the video. The project uses Fer2013 data. 
 
-The idea of this project is to have a browser extension, Mobile App and a Web App that connects to Adtech platforms. Once connected, a user would be shown ads based on their cookies and they would be incentivized to watch those ads, while we ask for their consent to track the mentioned facial features. This data would allow advertising companies \ Publishers to understand what part of the ad the user is focussed on and also their engagement level. 
+The idea of this project is to have a browser extension, Mobile App and a Web App that connects to Adtech platforms. Once connected, a user would be shown ads based on their cookies and they would be incentivized to watch those ads, instead of pressing "skips ad" as it often happens with video advertisements. While we ask for their consent to track the mentioned facial features. This data would allow advertising companies \ Publishers to understand what part of the ad the user is focussed on and also their engagement level. 
 
 Use app1.py to run instead of main.py
 app1.py runs the flask server
