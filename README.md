@@ -9,9 +9,9 @@ app1.py fires the Flask server. After a new user logs into the App, they would b
 
 At the backend, 
 1) the advert video file gets converted to frames using video2frames.py - the output can be stored in output_frames;
-2) write2csv.py gets these frames and converts then to csv - naming each frame with a jpg name and numer;
-3) another file will fixpos2Densemap(under const) adds heatmap on the frames;
-4) frame_to_video.py converts the video with heatmap back to a video
+2) Heatmap_on_Frames.py adds heatmap on the frames using the data from eye_gaze_analysis.py file;
+3) frame_to_video.py converts the video with heatmap back to a video;
+4) all the above sequence of functions are performed using flame_thrower.py
 
 Feature extractions:
 1) The cam gets converted into a video blob in app1.py and gets uploaded to a folder "upload_files". This can also be a S3 bucket;
