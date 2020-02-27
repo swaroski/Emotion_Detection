@@ -9,7 +9,7 @@ import time
 import os
 import csv
 
-input_loc = ".\\input_video\\vtest.avi"
+input_loc = ".\\input_video\\video1.mp4"
 output_loc = ".\\output_frames"
 
 def video2frames():
