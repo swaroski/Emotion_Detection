@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # In[10]:
-
+#This file overlays or superimposes heatmap over individual frames inside a folder. It uses eye-gaze co-ordinates. 
 
 import cv2
 import os
