@@ -2,7 +2,8 @@
 # coding: utf-8
 
 # In[11]:
-
+#converts the video with heatmap back to a video. It first executes the videos2frames.py to convert video to frames.
+#Then a heatmap is applied over those frames using heatmap_generator. Lastly, the frames with the heatmap are converted back to a video.  
 
 from video2frames import video2frames
 from write2csv import write2csv
