@@ -13,7 +13,7 @@ import face_expressions as ver
 from json import loads
 
 #consumer = KafkaConsumer('new_topic', bootstrap_servers='54.210.48.50:9092')
-KAFKA_HOST = '192.168.99.100:9092'
+KAFKA_HOST = '34.238.238.18:9092'
 
 #app = Flask(__name__)
 
