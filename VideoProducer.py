@@ -8,7 +8,7 @@ from time import sleep
 
 
 PATH = "C:\\Users\\bhise\\vision\\video.mp4"
-KAFKA_HOST = '192.168.99.100:9092'
+KAFKA_HOST = '34.238.238.18:9092'
 #df_test = pd.read_csv(PATH/'adult.test')
 # In the real world, the messages would not come with the target/outcome of
 # our actions. Here we will keep it and assume that at some point in the
