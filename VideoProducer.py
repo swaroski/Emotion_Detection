@@ -7,8 +7,8 @@ from kafka import KafkaProducer, KafkaConsumer
 from time import sleep
 
 
-PATH = "C:\\Users\\bhise\\vision\\video.mp4"
-KAFKA_HOST = '34.238.238.18:9092'
+PATH = "upload_files/12843b037a874276ab21d61b9beda2e2.webm"
+KAFKA_HOST = 'localhost:9092'
 #df_test = pd.read_csv(PATH/'adult.test')
 # In the real world, the messages would not come with the target/outcome of
 # our actions. Here we will keep it and assume that at some point in the

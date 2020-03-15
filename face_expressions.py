@@ -31,16 +31,16 @@ def preprocess_input(x, v2=True):
         x = x * 2.0
     return x
 
-detect_model_path = '.\\data\\haarcascade_frontalface_default.xml'
+detect_model_path = './data/haarcascade_frontalface_default.xml'
 
 
 face_detection = cv2.CascadeClassifier(detect_model_path)
-emotion_classifier = load_model('.\\data\\recog.h5')
+emotion_classifier = load_model('./data/recog.h5')
 EMOTIONS = ["angry", "disgust", "scared", "happy", "sad", "surprised", "neutral"]
 
 def gen(file):
-    cv2.namedWindow('cam')
-    print(file)
+#    cv2.namedWindow('cam')
+    print("After naming window", file)
     cap = cv2.VideoCapture(file)
     predictions = list()
     count =0
@@ -86,7 +86,7 @@ def gen(file):
             predictions.append(label)
             data = (zip(predictions, frame_images))
 
-        with open(".\\static\\db\\histo_perso.txt", "a", newline = '') as d:
+        with open("./static/db/histo_perso.txt", "a", newline = '') as d:
             #d.write("density  Time" +'\n')
             #writer = csv.DictWriter(d, fieldnames=["X", "Time"])
             #writer.writeheader()
