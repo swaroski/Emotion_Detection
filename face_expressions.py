@@ -42,7 +42,7 @@ def gen(file):
 #    cv2.namedWindow('cam')
     #print("After naming window", file)
     cap = cv2.VideoCapture(file)
-    #print("captain plaenet is here")
+    print("FileName:", file)
     predictions = list()
     count =0
     #print("Framecount: ", cap.get(cv2.CAP_PROP_FRAME_COUNT))
