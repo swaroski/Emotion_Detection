@@ -39,3 +39,10 @@ Steps to the App:
    ![](allowaccess.gif)
    
 ![](video_review.gif)
+
+
+
+By giving access to the webcam, the users are allowing us to capture their facial expressions and make a guesstimate for:
+Expressions, Age, Gender and also track their eyes as they watch the video. 
+
+![](expression.gif)
