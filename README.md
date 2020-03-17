@@ -27,3 +27,7 @@ watcher.py folder is an Event Handler. It is currently set to the "output" folde
 https://github.com/gwenshap/lambda_s3_kafka/blob/master/lambda_s3_kafka.py
 
 Use Python 3.6.5 
+
+Steps to the App:
+
+![](video_review.gif)
