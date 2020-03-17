@@ -29,5 +29,7 @@ https://github.com/gwenshap/lambda_s3_kafka/blob/master/lambda_s3_kafka.py
 Use Python 3.6.5 
 
 Steps to the App:
+1) Sign up  to the App:
+![](signup.gif)
 
 ![](video_review.gif)
