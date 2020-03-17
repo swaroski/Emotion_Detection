@@ -53,3 +53,9 @@ The data we share with clients serving the video:
 Example:: Emotions of users watching a video over time 
 
 ![](overtime.gif)
+
+
+Eye Gaze of what the users were engaging their eyes on per frame
+
+![](example.gif)
+
