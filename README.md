@@ -46,3 +46,9 @@ By giving access to the webcam, the users are allowing us to capture their facia
 Expressions, Age, Gender and also track their eyes as they watch the video. 
 
 ![](expression.gif)
+
+
+The data we share with clients serving the video:
+Example:: Emotions of users watching a video over time 
+
+![](overtime.gif)
