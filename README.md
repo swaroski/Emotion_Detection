@@ -37,4 +37,5 @@ Steps to the App:
 
 3) Allow access to the webcam on your laptop, desktop through your browser:
    ![](allowaccess.gif)
+   
 ![](video_review.gif)
