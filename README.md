@@ -32,4 +32,9 @@ Steps to the App:
 1) Sign up  to the App:
 ![](signup.gif)
 
+2) When you login for the first time, give consent:
+   ![](consent.gif)
+
+3) Allow access to the webcam on your laptop, desktop through your browser:
+   ![](allowaccess.gif)
 ![](video_review.gif)
