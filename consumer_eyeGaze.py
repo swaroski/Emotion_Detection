@@ -26,6 +26,7 @@ def start_consuming():
     consumer = KafkaConsumer('app_messages', bootstrap_servers=KAFKA_HOST, value_deserializer=lambda v: loads(v.decode('utf-8')))
 
     for msg in consumer:
+        print("Message in consumer: ", msg)
         file_path = msg.value
         file = file_path.get('data')
         print("The data path is : ", file)
