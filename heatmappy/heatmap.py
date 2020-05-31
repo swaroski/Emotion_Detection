@@ -206,7 +206,7 @@ class PILGreyHeatmapper(GreyHeatMapper):
         dot = _img_to_opacity(dot, self.point_strength)
 
         for x, y in points:
-            x, y = int(x - self.point_diameter/2), int(y - self.point_diameter/2)
+            x, y = int(float(x) - self.point_diameter/2), int(float(y) - self.point_diameter/2)
             heat.paste(dot, (x, y), dot)
 
         return heat

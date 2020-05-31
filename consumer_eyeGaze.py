@@ -7,11 +7,15 @@ Remember to change KAFKA_HOST port when using on AWS. One can also pass the outp
 from kafka import KafkaConsumer
 import eye_gaze_analysis as EG
 from json import loads
+import utils.s3utils as s3_lib
 
 #consumer = KafkaConsumer('new_topic', bootstrap_servers='54.210.48.50:9092')
 
 #KAFKA_HOST = '34.238.238.18:9092'
 KAFKA_HOST = 'localhost:9092'
+
+BUCKET="focusai-private-sb"
+
 
 
 #app = Flask(__name__)
@@ -27,10 +31,14 @@ def start_consuming():
     consumer = KafkaConsumer('app_messages', bootstrap_servers=KAFKA_HOST, value_deserializer=lambda v: loads(v.decode('utf-8')))
 
     for msg in consumer:
+        print("Message in consumer: ", msg)
         file_path = msg.value
         file = file_path.get('data')
-        
-        EG.run_tracker(file)
+        print("The data path is : ", file)
+        #Look for this file in S3, and download it to /downloads folder
+        download_file =   "./downloads/" + file
+        s3_lib.download_file_local(file, BUCKET, download_file)
+        EG.run_tracker(download_file)
             
 
 #@app.route('/')

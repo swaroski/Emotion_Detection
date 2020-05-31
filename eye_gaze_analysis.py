@@ -12,7 +12,7 @@ if sys_pf == 'darwin':
 from matplotlib import pyplot as plt
 import cv2
 import autopy
-import seaborn as sns
+#import seaborn as sns
 import time
 import imutils
 import csv
@@ -20,7 +20,7 @@ import pandas as pd
 import time
 #from datetime import datetime
 frame_images=[]
-file = "C:\\Users\\bhise\\vision\\video.mp4"
+file = "video1.mp4"
 
 ESCAPE_KEY = 'q'
 # Standards: use constants like this to follow DRY
@@ -65,23 +65,26 @@ def update_mouse_position(hough_circles, eye_x_pos, eye_y_pos, roi_color2):
             # print(i[0],i[1])
 
             x_pos = int(eye_x_pos)
+            print("xpos", x_pos)
             y_pos = int(eye_y_pos)
-            autopy.mouse.move(x_pos, y_pos)
+            print("ypos", y_pos)
+#            autopy.mouse.move(x_pos, y_pos)
+            print("after mouse move")
     except Exception as e:
         # Standards: exception handling in try: except cases should generally be as specific as possible. What type of
         # exception are you expecting to encounter here? Instead of capturing "Exception" capture that specific class of exception.
         print('Exception:', e)
 
 face_cascade = cv2.CascadeClassifier(
-    ".\\data\\haarcascade_frontalface_default.xml"
+    "data/haarcascade_frontalface_default.xml"
 )
 eye_cascade = cv2.CascadeClassifier(
-    ".\\data\\haarcascade_righteye_2splits.xml"
+    "data/haarcascade_righteye_2splits.xml"
 )
 
 def run_tracker(file):
     #number signifies camera
-    cv2.namedWindow('cam')
+    #cv2.namedWindow('cam')
     video_capture = cv2.VideoCapture(file)
     cv2.startWindowThread()
     eye_x_positions = list()
@@ -101,15 +104,20 @@ def run_tracker(file):
     #eye_y_positions = list()
     count = 0
     #key_pressed = None
-    while True:
+    while video_capture.isOpened():
         success, image = video_capture.read()
         #image = imutils.resize(image)
         #t1 = time.time() # current time
         #num_seconds = t1 - t0 # diff
         #if num_seconds > 30:  # e.g. break after 30 seconds
         #    break
+        if success is False:
+            break
         if image is None:
+        
             continue
+        print("life is gray", cv2.COLOR_BGR2GRAY) 
+        print("Image mila maja aaya", image)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         frameClone = image.copy()
         #faces = face_cascade.detectMultiScale(gray, 1.3, 5)
@@ -161,15 +169,17 @@ def run_tracker(file):
             #print('{}.jpg'.format(curr_frame,"05d"))
             print(converted_name)
             frame_images.append(converted_name)
+            print("After frame_images")
             #print(type(curr_frame))
             count += 1
             # Standards: in general in the interests of improving readability, move logical chunks
             # of code out into their own classes, methods, or functions to make it easier to understand overall
             # program flow
             update_mouse_position(hough_circles, eye_x_pos, eye_y_pos, roi_color2)
+            print("after updating mouse position")
 
         #cv2.imshow('img', image)
-        cv2.imshow('cam', frameClone)
+       # cv2.imshow('cam', frameClone)
         # Standards: code like this can be hard to understand, so comments explicitly describing operation are desirable:
         # This reduces cv2.waitKey() response to 8 bit integer, representing ASCII input
         #if cap.get(cv2.CAP_PROP_POS_FRAMES) == cap.get(cv2.CAP_PROP_FRAME_COUNT):
@@ -192,14 +202,14 @@ def run_tracker(file):
     #plot_data(eye_x_positions, eye_y_positions)
     data = (zip(eye_x_positions, eye_y_positions, frame_images))
     
-    print (video_capture.get(cv2.CAP_PROP_POS_MSEC))
+    print ("Video Capture", video_capture.get(cv2.CAP_PROP_POS_MSEC))
     
-    print(data)
+    print("Data :", data)
     
     # Once reaching the end, write the results to the personal file and to the overall file
     #if end-start > max_time - 1:
     print(data)
-    with open(".\\static\\db\\histo_eyes.csv", "a", newline = '') as d:
+    with open("static/db/histo_eyes.csv", "a", newline = '') as d:
             #d.write("density  Time" +'\n')
             #writer = csv.DictWriter(d, fieldnames=["X", "Y", "name"],delimiter=',')
             #writer.writeheader()

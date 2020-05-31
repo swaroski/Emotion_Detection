@@ -40,19 +40,27 @@ EMOTIONS = ["angry", "disgust", "scared", "happy", "sad", "surprised", "neutral"
 
 def gen(file):
 #    cv2.namedWindow('cam')
-    print("After naming window", file)
+    #print("After naming window", file)
     cap = cv2.VideoCapture(file)
+    print("FileName:", file)
     predictions = list()
     count =0
-    while True:
+    #print("Framecount: ", cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    #print("PosFrames: ",  cap.get(cv2.CAP_PROP_POS_FRAMES))
+    while (cap.isOpened()):
         ret, frame = cap.read()
+        if ret is False:
+            break
+        #print("Return Value:", ret)
         #frame = imutils.resize(frame)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+       # cv2.imshow('frame', gray)
+       # #print("what is gray", gray)
         faces = face_detection.detectMultiScale(gray, scaleFactor = 1.1, minNeighbors = 5, 
                                                 minSize = (30,30), flags = cv2.CASCADE_SCALE_IMAGE)
         
         if frame is None:
-            continue
+            continue 
         fps = cap.get(cv2.CAP_PROP_FPS)
         canvas = np.zeros((250, 300, 3), dtype = "uint8")
         frameClone = frame.copy()
@@ -72,35 +80,37 @@ def gen(file):
             pred = emotion_classifier.predict(roi)[0]
             emotion_probability = np.max(pred)
             label = EMOTIONS[pred.argmax()]
-            print(label)
+            #print(label)
 
             #font = cv2.CV_FONT_HERSHEY_SIMPLEX, 1, 1, 0, 3, 8  # Creates a font
             x = 100  # position of text
             y = 200  # position of text
-            print("Before cv2.puttext")
+            #print("Before cv2.puttext")
             cv2.putText(frameClone, label, (x, y), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (0, 0, 255), lineType=cv2.LINE_AA)
-            print("after cv2") 
+            #print("after cv2") 
             calc_timestamps.append(calc_timestamps[-1] + 1000/fps)
             curr_time = int(round(time.time() * 1000))
             frame_images.append(curr_time)
             curr_frame = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
             count += 1
             predictions.append(label)
-            print("bas bhi kar")
+            #print("bas bhi kar")
             data = (zip(predictions, frame_images))
-            print("after data zip") 
+            #print("after data zip") 
 
         with open("./static/db/histo_perso.txt", "a", newline = '') as d:
-            print("inside open")
+            #print("inside open")
             #d.write("density  Time" +'\n')
             #writer = csv.DictWriter(d, fieldnames=["X", "Time"])
             #writer.writeheader()
             writer = csv.writer(d, delimiter=',') 
             for row in (data):
+                #print(row)
                 writer.writerow(row)
                 #writer.writerow(zip(data))
             d.close()
         if cap.get(cv2.CAP_PROP_POS_FRAMES) == cap.get(cv2.CAP_PROP_FRAME_COUNT):
+            #print("done")
         # If the number of captured frames is equal to the total number of frames,
         # we stop
             break
