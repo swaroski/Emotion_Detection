@@ -10,9 +10,14 @@ from json import loads
 import utils.s3utils as s3_lib
 
 #consumer = KafkaConsumer('new_topic', bootstrap_servers='54.210.48.50:9092')
+
 #KAFKA_HOST = '34.238.238.18:9092'
 KAFKA_HOST = 'localhost:9092'
+
 BUCKET="focusai-private-sb"
+
+
+
 #app = Flask(__name__)
 
 

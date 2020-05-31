@@ -27,3 +27,35 @@ watcher.py folder is an Event Handler. It is currently set to the "output" folde
 https://github.com/gwenshap/lambda_s3_kafka/blob/master/lambda_s3_kafka.py
 
 Use Python 3.6.5 
+
+Steps to the App:
+1) Sign up  to the App:
+![](signup.gif)
+
+2) When you login for the first time, give consent:
+   ![](consent.gif)
+
+3) Allow access to the webcam on your laptop, desktop through your browser:
+   ![](allowaccess.gif)
+   
+![](video_review.gif)
+
+
+
+By giving access to the webcam, the users are allowing us to capture their facial expressions and make a guesstimate for:
+Expressions, Age, Gender and also track their eyes as they watch the video. 
+
+![](expression.gif)
+
+
+The data we share with clients serving the video:
+
+Example:: Emotions of users watching a video over time 
+
+![](overtime.gif)
+
+
+Eye Gaze of what the users were engaging their eyes on per frame
+
+![](example.gif)
+
