@@ -14,7 +14,7 @@ matplotlib==3.1.2
 cmake
 seaborn==0.10.0
 flask-cors-3.0.8
-tensorflow==2.0.0
+tensorflow==2.9.3
 time
 re
 os
