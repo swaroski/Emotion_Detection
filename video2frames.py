@@ -50,9 +50,6 @@ def video2frames():
 if __name__=="__main__":
     video2frames()
 
-
-if __name__=="__main__":
-    video2frames()
     
     
     
