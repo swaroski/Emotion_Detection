@@ -4,45 +4,29 @@
 # In[ ]:
 
 '''This file acts as a Kafka consumer for data from VideoProducer.py. The data file is then sent to face_expressions.py file. 
-Remember to change KAFKA_HOST port when using on AWS. One can also pass the output to the flask server and display it on the browser'''
-#from flask import Flask, Response
-from kafka import KafkaConsumer
+Remember to change KAFKA_HOST port when using on AWS. One can also pass the output to the flask server and display it on the browser.
 
-#data from producer to be consumed and passed through this file
+This code is a Kafka consumer that listens for messages on the 'app_messages' topic. When a message is received, it retrieves the 
+file path specified in the message and downloads the file from an S3 bucket using the s3_lib.download_file_local function. 
+It then calls the ver.gen function with the downloaded file as input.'''
 import face_expressions as ver
 from json import loads
 import utils.s3utils as s3_lib
-#consumer = KafkaConsumer('new_topic', bootstrap_servers='54.210.48.50:9092')
+
 KAFKA_HOST = 'localhost:9092'
-BUCKET="focusai-private-sb"
-#app = Flask(__name__)
-
-
-#def kafkastream():
-    #for message in consumer:
-        
-        #yield (b'--frame\r\n'
-               #b'Content-Type: image/jpeg\r\n\r\n' + message.value + b'\r\n\r\n')
+BUCKET = "focusai-private-sb"
 
 def start_consuming():
     consumer = KafkaConsumer('app_messages', bootstrap_servers=KAFKA_HOST, value_deserializer=lambda v: loads(v.decode('utf-8')))
-    print("got consumer, (maybe)")
     for msg in consumer:
-        print("inside for: ", msg.value)
         file_path = msg.value
         file = file_path.get('data')
-        print("The data path is : ", file)        
-        #Look for this file in S3, and download it to /downloads folder
-        download_file =   "./downloads/" + file
+        download_file = "./downloads/" + file
         s3_lib.download_file_local(file, BUCKET, download_file)
         ver.gen(download_file)
 
-#@app.route('/')
-#def index():
- #   return Response(kafkastream(),
-  #                  mimetype='multipart/x-mixed-replace; boundary=frame')
-
-
 if __name__ == '__main__':
     start_consuming()
+
+
 
